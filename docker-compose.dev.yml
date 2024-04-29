@@ -1,0 +1,45 @@
+services:
+  app:
+    image: client-dev
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+    container_name: client-dev
+
+  auth-server:
+    image: auth-server-dev
+    build:
+      context: ./backend/auth-server
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/auth-server/:/usr/src/app
+      - /usr/src/app/node_modules
+
+  graphql-server:
+    image: graphql-server-dev
+    build:
+      context: ./backend/graphql-server
+      dockerfile: dev.Dockerfile
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend/graphql-server/:/usr/src/app
+      - /usr/src/app/node_modules
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - auth-server
+      - graphql-server
