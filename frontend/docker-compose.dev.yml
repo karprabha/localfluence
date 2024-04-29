@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  localfluence-frontend:
-    image: localfluence-frontend-dev
+  client:
+    image: client-dev
     build:
       context: .
       dockerfile: dev.Dockerfile
