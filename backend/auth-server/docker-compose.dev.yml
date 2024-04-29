@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  auth-server:
+    image: auth-server-dev
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
