@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  localfluence-frontend:
+    image: localfluence-frontend-dev
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5000:3000
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
