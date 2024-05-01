@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  client:
+    image: client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:3000
