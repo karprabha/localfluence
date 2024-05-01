@@ -5,3 +5,8 @@ dev.Dockerfile
 
 docker-compose.yml
 docker-compose.dev.yml
+
+eslint.config.mjs
+
+.prettierrc
+.prettierignore
