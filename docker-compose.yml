@@ -1,0 +1,31 @@
+services:
+  app:
+    image: client
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: client
+
+  auth-server:
+    image: auth-server
+    build:
+      context: ./backend/auth-server
+      dockerfile: Dockerfile
+
+  graphql-server:
+    image: graphql-server
+    build:
+      context: ./backend/graphql-server
+      dockerfile: Dockerfile
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - auth-server
+      - graphql-server
