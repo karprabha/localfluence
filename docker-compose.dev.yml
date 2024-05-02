@@ -41,6 +41,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./database/pgdata:/var/lib/postgresql/data
 
   nginx:
     image: nginx:1.20.1
