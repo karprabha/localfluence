@@ -1,4 +1,4 @@
-const { ApolloServer } = require("@apollo/server");
+const { ApolloServer } = require('@apollo/server');
 
 const typeDefs = `
   type Query {
@@ -8,7 +8,7 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    root: () => "Hello World",
+    root: () => 'Hello World',
   },
 };
 

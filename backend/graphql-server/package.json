@@ -12,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.4",
-    "graphql": "^16.8.1"
+    "dotenv": "^16.4.5",
+    "graphql": "^16.8.1",
+    "pg": "^8.11.5",
+    "sequelize": "^6.37.3",
+    "umzug": "^3.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",

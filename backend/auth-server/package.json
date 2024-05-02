@@ -12,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^4.3.4",
-    "express": "^4.19.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "sequelize": "^6.37.3",
+    "umzug": "^3.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",

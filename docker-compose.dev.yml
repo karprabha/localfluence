@@ -1,38 +1,54 @@
 services:
   app:
     image: client-dev
+    container_name: client-dev
     build:
       context: ./frontend
       dockerfile: dev.Dockerfile
     volumes:
       - ./frontend:/usr/src/app
-    container_name: client-dev
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
 
   auth-server:
     image: auth-server-dev
+    container_name: auth-server-dev
     build:
       context: ./backend/auth-server
       dockerfile: dev.Dockerfile
     volumes:
       - ./backend/auth-server/:/usr/src/app
       - /usr/src/app/node_modules
+    environment:
+      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-dev:5432/${POSTGRES_DB}
 
   graphql-server:
     image: graphql-server-dev
+    container_name: graphql-server-dev
     build:
       context: ./backend/graphql-server
       dockerfile: dev.Dockerfile
     volumes:
       - ./backend/graphql-server/:/usr/src/app
       - /usr/src/app/node_modules
+    environment:
+      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-dev:5432/${POSTGRES_DB}
+
+  postgres:
+    image: postgres
+    container_name: postgres-dev
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   nginx:
     image: nginx:1.20.1
+    container_name: reverse-proxy-dev
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
-    container_name: reverse-proxy
     depends_on:
       - app
       - auth-server
