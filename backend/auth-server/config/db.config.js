@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { Umzug, SequelizeStorage } = require('umzug');
 
-const { POSTGRES_URL } = require('./env.config');
+const { POSTGRES_URL, NODE_ENV } = require('./env.config');
 
 const sequelize = new Sequelize(POSTGRES_URL, {
   dialect: 'postgres',
@@ -15,6 +15,13 @@ const migrationConf = {
   logger: console,
 };
 
+const seedsConf = {
+  migrations: { glob: 'database/seeds/*.js' },
+  storage: new SequelizeStorage({ sequelize, tableName: 'seeds' }),
+  context: sequelize.getQueryInterface(),
+  logger: console,
+};
+
 const runMigrations = async () => {
   const migrator = new Umzug(migrationConf);
   const migrations = await migrator.up();
@@ -23,10 +30,23 @@ const runMigrations = async () => {
   });
 };
 
+const runSeeders = async () => {
+  const seeder = new Umzug(seedsConf);
+  const seeds = await seeder.up();
+  console.log('Seeders up to date', {
+    files: seeds.map((seed) => seed.name),
+  });
+};
+
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
     await runMigrations();
+
+    if (NODE_ENV && NODE_ENV !== 'production') {
+      await runSeeders();
+    }
+
     console.log('connected to the database');
   } catch (err) {
     console.log('failed to connect to the database', err);
@@ -36,4 +56,4 @@ const connectToDatabase = async () => {
   return null;
 };
 
-module.exports = { connectToDatabase, sequelize, migrationConf };
+module.exports = { connectToDatabase, sequelize, migrationConf, seedsConf };
