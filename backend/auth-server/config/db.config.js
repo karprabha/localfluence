@@ -22,14 +22,25 @@ const seedsConf = {
   logger: console,
 };
 
-const connectToDatabase = async () => {
+const MAX_RETRIES = 5;
+const RETRY_DELAY_MS = 3000;
+
+const connectToDatabase = async (retryCount = 0) => {
   try {
     await sequelize.authenticate();
-
-    console.log('connected to the database');
+    console.log('Connected to the database');
   } catch (err) {
-    console.log('failed to connect to the database', err);
-    return process.exit(1);
+    console.error('Failed to connect to the database', err);
+    if (retryCount < MAX_RETRIES) {
+      console.log(`Retrying connection (${retryCount + 1}/${MAX_RETRIES})...`);
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+      return connectToDatabase(retryCount + 1);
+    } else {
+      console.error(
+        `Maximum retry attempts (${MAX_RETRIES}) reached. Shutting down...`,
+      );
+      process.exit(1);
+    }
   }
 
   return null;
