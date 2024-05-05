@@ -8,9 +8,10 @@ LocalFluence is a platform aimed at facilitating connections between businesses 
 - [Development Setup](#development-setup)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [Managing Database Migrations and Seeds](#managing-database-migrations-and-seeds)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
+- [Credits](#credits)
 
 ## Overview
 
@@ -44,6 +45,7 @@ Welcome to LocalFluence, where businesses and influencers connect effortlessly. 
 ### Prerequisites
 
 - Docker
+- vscode (optional but for best experience)
 
 ### Installation
 
@@ -63,6 +65,66 @@ Welcome to LocalFluence, where businesses and influencers connect effortlessly. 
    ```bash
    docker-compose -f docker-compose.dev.yml up
    ```
+
+## Managing Database Migrations and Seeds
+
+When performing database migrations and seeds for the services in your project, follow these steps:
+
+1. **Write Migrations and Seeds**:
+
+   Create or modify migration and seed files directly in the root `database/migrations` and `database/seeds` directories of your project.
+
+   Example:
+
+   - Add new migration files in `database/migrations`.
+   - Add seed files in `database/seeds`.
+
+2. **Sync Database Directories Across Services**:
+
+   After writing migrations and seeds, synchronize the database directories of individual services to reflect changes made:
+
+   ```bash
+   ./scripts/sync-db-directories.sh
+   ```
+
+   This script ensures that database changes are propagated correctly across services.
+
+3. **Run Migration Scripts Inside Containers**:
+
+   To run migrations and seeds within the containers of your services, follow these steps:
+
+   a. **Access the Service's Interactive Shell**:
+   Use Docker to enter the interactive shell of the desired service container. For example, to access the `auth-server` container:
+
+   ```bash
+   docker exec -it auth-server-dev sh
+   ```
+
+   b. **Run Migration Commands**:
+   Once inside the container, run the migration and seed commands directly:
+
+   - To migrate the database:
+
+     ```bash
+     npm run migration:up
+     ```
+
+   - To rollback migrations:
+
+     ```bash
+     npm run migration:down
+     ```
+
+   - To seed the database:
+
+     ```bash
+     npm run seed:up
+     ```
+
+   - To rollback seeds:
+     ```bash
+     npm run seed:down
+     ```
 
 ## Contributing
 
