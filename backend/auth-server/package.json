@@ -14,6 +14,8 @@
     "debug": "^4.3.4",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
+    "morgan": "^1.10.0",
     "pg": "^8.11.5",
     "sequelize": "^6.37.3",
     "umzug": "^3.8.0"
