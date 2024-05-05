@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")/.."
+
 # Define paths for migrations and seeds
 migrations_parent="../../database/migrations"
 seeds_parent="../../database/seeds"
