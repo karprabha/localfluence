@@ -9,24 +9,23 @@ const sequelize = new Sequelize(POSTGRES_URL, {
 });
 
 const migrationConf = {
-  migrations: { glob: '../../../database/migrations/*.js' },
+  migrations: { glob: 'database/migrations/*.js' },
   storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
   context: sequelize.getQueryInterface(),
   logger: console,
 };
 
-const runMigrations = async () => {
-  const migrator = new Umzug(migrationConf);
-  const migrations = await migrator.up();
-  console.log('Migrations up to date', {
-    files: migrations.map((mig) => mig.name),
-  });
+const seedsConf = {
+  migrations: { glob: 'database/seeds/*.js' },
+  storage: new SequelizeStorage({ sequelize, tableName: 'seeds' }),
+  context: sequelize.getQueryInterface(),
+  logger: console,
 };
 
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
-    await runMigrations();
+
     console.log('connected to the database');
   } catch (err) {
     console.log('failed to connect to the database', err);
@@ -36,4 +35,4 @@ const connectToDatabase = async () => {
   return null;
 };
 
-module.exports = { connectToDatabase, sequelize, migrationConf };
+module.exports = { connectToDatabase, sequelize, migrationConf, seedsConf };

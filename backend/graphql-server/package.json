@@ -5,7 +5,11 @@
   "main": "./bin/www",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "DEBUG=app:* && nodemon ./bin/www"
+    "dev": "DEBUG=app:* && nodemon ./bin/www",
+    "migration:up": "node scripts/runMigrations.js",
+    "migration:down": "node scripts/rollbackMigration.js",
+    "seed:up": "node scripts/runSeeders.js",
+    "seed:down": "node scripts/rollbackSeed.js"
   },
   "keywords": [],
   "author": "Prabhakar Yadav",
