@@ -66,13 +66,13 @@ Welcome to LocalFluence, where businesses and influencers connect effortlessly. 
    docker-compose -f docker-compose.dev.yml up
    ```
 
-## Managing Database Migrations and Seeds
+### Managing Database Migrations and Seeds
 
-When performing database migrations and seeds for the services in your project, follow these steps:
+When performing database migrations and seeds for the services in the project, follow these steps:
 
 1. **Write Migrations and Seeds**:
 
-   Create or modify migration and seed files directly in the root `database/migrations` and `database/seeds` directories of your project.
+   Create or modify migration and seed files directly in the root `database/migrations` and `database/seeds` directories of the project.
 
    Example:
 
@@ -91,7 +91,7 @@ When performing database migrations and seeds for the services in your project, 
 
 3. **Run Migration Scripts Inside Containers**:
 
-   To run migrations and seeds within the containers of your services, follow these steps:
+   To run migrations and seeds within the containers of the services, follow these steps:
 
    a. **Access the Service's Interactive Shell**:
    Use Docker to enter the interactive shell of the desired service container. For example, to access the `auth-server` container:
