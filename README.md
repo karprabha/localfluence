@@ -58,7 +58,7 @@ Welcome to LocalFluence, where businesses and influencers connect effortlessly. 
 
 2. Set up environment variables:
 
-   - Create .env file based on .env.example.
+   - Create `.env` file based on `.env.example`.
 
 3. Start development environment:
 
