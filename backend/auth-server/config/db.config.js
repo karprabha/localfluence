@@ -9,7 +9,7 @@ const sequelize = new Sequelize(POSTGRES_URL, {
 });
 
 const migrationConf = {
-  migrations: { glob: '../../../database/migrations/*.js' },
+  migrations: { glob: 'database/migrations/*.js' },
   storage: new SequelizeStorage({ sequelize, tableName: 'migrations' }),
   context: sequelize.getQueryInterface(),
   logger: console,

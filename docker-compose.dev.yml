@@ -20,7 +20,7 @@ services:
       - ./backend/auth-server/:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-dev:5432/${POSTGRES_DB}
+      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
 
   graphql-server:
     image: graphql-server-dev
@@ -32,7 +32,7 @@ services:
       - ./backend/graphql-server/:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-dev:5432/${POSTGRES_DB}
+      - POSTGRES_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
 
   postgres:
     image: postgres
