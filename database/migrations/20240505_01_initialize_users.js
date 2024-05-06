@@ -20,6 +20,12 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      avatar_url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:
+          "https://res.cloudinary.com/dn3rb7yf5/image/upload/v1698059883/blank_avatar_wdye0t.png",
+      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
