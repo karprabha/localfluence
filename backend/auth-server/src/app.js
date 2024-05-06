@@ -21,7 +21,7 @@ app.get('/health', (req, res) => {
   res.json({ message: 'Healthy' });
 });
 
-app.use('/api/v1', v1Router);
+app.use('/v1', v1Router);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
