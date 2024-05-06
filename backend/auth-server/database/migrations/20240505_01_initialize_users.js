@@ -20,12 +20,12 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },
-      updatedAt: {
+      updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,

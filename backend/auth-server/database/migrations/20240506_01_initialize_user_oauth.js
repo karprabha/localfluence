@@ -2,21 +2,22 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("user_oauth", {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      username: {
-        type: DataTypes.STRING,
-        unique: true,
+      user_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          isEmail: true,
-        },
+        references: { model: "users", key: "id" },
       },
-      name: {
+      provider: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      provider_user_id: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -33,6 +34,6 @@ module.exports = {
     });
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("user_oauth");
   },
 };

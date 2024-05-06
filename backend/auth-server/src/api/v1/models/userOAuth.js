@@ -1,24 +1,20 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../../../config');
 
-class User extends Model {}
+class UserOAuth extends Model {}
 
-User.init(
+UserOAuth.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    provider: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
-      validate: {
-        isEmail: true,
-      },
     },
-    name: {
+    providerUserId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -37,8 +33,8 @@ User.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'user',
+    modelName: 'userOauth',
   },
 );
 
-module.exports = User;
+module.exports = UserOAuth;
