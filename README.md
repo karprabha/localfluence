@@ -8,6 +8,7 @@ LocalFluence is a platform aimed at facilitating connections between businesses 
 - [Development Setup](#development-setup)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [Accessing Services](#accessing-services)
   - [Managing Database Migrations and Seeds](#managing-database-migrations-and-seeds)
 - [Contributing](#contributing)
 - [License](#license)
@@ -65,6 +66,19 @@ Welcome to LocalFluence, where businesses and influencers connect effortlessly. 
    ```bash
    docker-compose -f docker-compose.dev.yml up
    ```
+
+### Accessing Services
+
+- **Frontend**:
+
+  - Available at: [http://localhost:8080](http://localhost:8080)
+
+- **Auth Server**:
+
+  - Base URL: [http://localhost:8080/api/](http://localhost:8080/api/)
+
+- **GraphQL Server**:
+  - Base URL: [http://localhost:8080/graphql/](http://localhost:8080/graphql/)
 
 ### Managing Database Migrations and Seeds
 
