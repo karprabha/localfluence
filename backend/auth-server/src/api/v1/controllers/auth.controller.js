@@ -13,7 +13,7 @@ const githubOAuth = async (req, res, next) => {
   const authUser = await authService.handleOAuthLogin(oAuthUser, 'github');
 
   if (!authUser) {
-    res.status(500).json({ message: 'OAuth Failed' });
+    res.status(500).redirect(`/oauth?error=oauth-failed`);
     return;
   }
 
@@ -30,7 +30,7 @@ const googleOAuth = async (req, res, next) => {
   const authUser = await authService.handleOAuthLogin(oAuthUser, 'google');
 
   if (!authUser) {
-    res.status(500).json({ message: 'OAuth Failed' });
+    res.status(500).redirect(`/oauth?error=oauth-failed`);
     return;
   }
 

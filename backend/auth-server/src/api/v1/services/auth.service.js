@@ -69,7 +69,7 @@ const handleOAuthLogin = async (authUser, provider) => {
       await transaction.rollback();
     }
     console.error('Error in handleOAuthLogin:', error);
-    throw error;
+    return null;
   }
 };
 
