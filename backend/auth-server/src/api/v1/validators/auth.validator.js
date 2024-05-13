@@ -53,7 +53,12 @@ const loginValidator = [
   body('password').notEmpty().withMessage('Password is required'),
 ];
 
+const logoutValidator = [
+  body('refreshToken').notEmpty().withMessage('Refresh token is required'),
+];
+
 module.exports = {
   loginValidator,
+  logoutValidator,
   signupValidator,
 };

@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { User, UserPassword } = require('../models');
+const { User, UserPassword, RefreshToken } = require('../models');
 const { sequelize } = require('../../../../config');
 
 const handleUserSignUp = async ({ name, username, password }) => {
@@ -58,7 +58,20 @@ const handlePasswordLogin = async ({ username, password }) => {
   };
 };
 
+const handleUserLogout = async (refreshToken) => {
+  const deletedTokenCount = await RefreshToken.destroy({
+    where: {
+      token: refreshToken,
+    },
+  });
+
+  if (deletedTokenCount === 0) {
+    throw new Error('Refresh token not found or already deleted');
+  }
+};
+
 module.exports = {
   handleUserSignUp,
+  handleUserLogout,
   handlePasswordLogin,
 };

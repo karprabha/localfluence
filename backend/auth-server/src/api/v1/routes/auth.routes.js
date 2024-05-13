@@ -24,4 +24,11 @@ router.post(
   authController.login,
 );
 
+router.post(
+  '/auth/logout',
+  authValidator.logoutValidator,
+  queryValidationMiddleware,
+  authController.logout,
+);
+
 module.exports = router;

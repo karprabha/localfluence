@@ -69,9 +69,18 @@ const login = async (req, res, next) => {
   });
 };
 
+const logout = async (req, res, next) => {
+  const { refreshToken } = req.body;
+
+  await authService.handleUserLogout(refreshToken);
+
+  res.json({ message: 'Logout successful!' });
+};
+
 module.exports = {
   login,
   oAuth,
+  logout,
   signUp,
   githubOAuth,
   googleOAuth,
