@@ -70,8 +70,23 @@ const handleUserLogout = async (refreshToken) => {
   }
 };
 
+const getRefreshTokenRecord = async (refreshToken) => {
+  const refresh = await RefreshToken.findOne({
+    where: {
+      token: refreshToken,
+    },
+  });
+
+  if (!refresh) {
+    throw new Error('Refresh token not found.');
+  }
+
+  return { userId: refresh.userId };
+};
+
 module.exports = {
   handleUserSignUp,
   handleUserLogout,
   handlePasswordLogin,
+  getRefreshTokenRecord,
 };

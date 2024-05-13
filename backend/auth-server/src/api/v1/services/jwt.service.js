@@ -42,10 +42,24 @@ const manageRefreshToken = async (authUser, refreshToken) => {
   }
 };
 
+const verifyRefreshToken = (refreshToken, refreshTokenRecord) => {
+  const decoded = jwt.verifyRefreshToken(refreshToken);
+
+  if (!decoded || decoded.id !== refreshTokenRecord.userId) {
+    throw new Error('Invalid refresh token.');
+  }
+
+  delete decoded.iat;
+  delete decoded.exp;
+
+  return decoded;
+};
+
 module.exports = {
   generateTokens,
   generateOAuthToken,
   generateAccessToken,
   verifyOAuthToken,
   manageRefreshToken,
+  verifyRefreshToken,
 };

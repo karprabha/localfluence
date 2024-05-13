@@ -57,8 +57,13 @@ const logoutValidator = [
   body('refreshToken').notEmpty().withMessage('Refresh token is required'),
 ];
 
+const refreshAccessTokenValidator = [
+  body('refreshToken').notEmpty().withMessage('Refresh token is required'),
+];
+
 module.exports = {
   loginValidator,
   logoutValidator,
   signupValidator,
+  refreshAccessTokenValidator,
 };

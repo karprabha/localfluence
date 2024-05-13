@@ -1,8 +1,8 @@
 const router = require('express').Router();
 
+const { authValidator } = require('../validators');
 const { authController } = require('../controllers');
 const { queryValidationMiddleware } = require('../middlewares');
-const { authValidator } = require('../validators');
 
 router.post('/auth/oauth', authController.oAuth);
 
@@ -29,6 +29,13 @@ router.post(
   authValidator.logoutValidator,
   queryValidationMiddleware,
   authController.logout,
+);
+
+router.post(
+  '/auth/refresh',
+  authValidator.refreshAccessTokenValidator,
+  queryValidationMiddleware,
+  authController.refreshAccessToken,
 );
 
 module.exports = router;

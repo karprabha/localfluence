@@ -77,6 +77,22 @@ const logout = async (req, res, next) => {
   res.json({ message: 'Logout successful!' });
 };
 
+const refreshAccessToken = async (req, res, next) => {
+  const { refreshToken } = req.body;
+
+  const refreshTokenRecord =
+    await authService.getRefreshTokenRecord(refreshToken);
+
+  const decodedPayload = jwtService.verifyRefreshToken(
+    refreshToken,
+    refreshTokenRecord,
+  );
+
+  const accessToken = jwtService.generateAccessToken(decodedPayload);
+
+  res.json({ accessToken });
+};
+
 module.exports = {
   login,
   oAuth,
@@ -84,4 +100,5 @@ module.exports = {
   signUp,
   githubOAuth,
   googleOAuth,
+  refreshAccessToken,
 };
