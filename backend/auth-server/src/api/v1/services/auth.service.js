@@ -1,6 +1,77 @@
 const bcrypt = require('bcryptjs');
-const { User, UserPassword, RefreshToken } = require('../models');
+const { User, UserPassword, RefreshToken, UserOAuth } = require('../models');
 const { sequelize } = require('../../../../config');
+
+const handleOAuthLogin = async (authUser, provider) => {
+  const { name, username, avatar_url } = authUser;
+  let transaction;
+
+  try {
+    transaction = await sequelize.transaction();
+
+    let userOAuth = await UserOAuth.findOne({
+      where: {
+        provider,
+        providerUserId: username,
+      },
+      include: {
+        model: User,
+        attributes: ['name', 'username', 'id'],
+      },
+      transaction,
+    });
+
+    if (userOAuth) {
+      const userData = userOAuth.user.toJSON();
+      return userData;
+    }
+
+    const existingUser = await User.findOne({
+      where: {
+        username,
+      },
+      transaction,
+    });
+
+    if (existingUser) {
+      throw new Error('Username is already in use');
+    }
+
+    const newUser = await User.create(
+      {
+        name,
+        username,
+        avatarUrl: avatar_url,
+      },
+      { transaction },
+    );
+
+    userOAuth = await UserOAuth.create(
+      {
+        provider,
+        providerUserId: username,
+        userId: newUser.id,
+      },
+      { transaction },
+    );
+
+    await transaction.commit();
+
+    const userData = {
+      id: newUser.id,
+      name: newUser.name,
+      username: newUser.username,
+    };
+
+    return userData;
+  } catch (error) {
+    if (transaction) {
+      await transaction.rollback();
+    }
+    console.error('Error in handleOAuthLogin:', error);
+    throw error;
+  }
+};
 
 const handleUserSignUp = async ({ name, username, password }) => {
   let transaction;
@@ -20,7 +91,9 @@ const handleUserSignUp = async ({ name, username, password }) => {
 
     return newUser;
   } catch (error) {
-    if (transaction) await transaction.rollback();
+    if (transaction) {
+      await transaction.rollback();
+    }
 
     console.error('Error in user sign-up:', error.message);
 
@@ -87,6 +160,7 @@ const getRefreshTokenRecord = async (refreshToken) => {
 module.exports = {
   handleUserSignUp,
   handleUserLogout,
+  handleOAuthLogin,
   handlePasswordLogin,
   getRefreshTokenRecord,
 };

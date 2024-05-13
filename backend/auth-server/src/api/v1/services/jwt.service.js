@@ -20,6 +20,10 @@ const generateAccessToken = (authUser) => {
 
 const verifyOAuthToken = (token) => {
   const decoded = jwt.verifyOAuthToken(token);
+
+  delete decoded.iat;
+  delete decoded.exp;
+
   return decoded;
 };
 

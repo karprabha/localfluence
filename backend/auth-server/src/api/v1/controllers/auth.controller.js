@@ -10,8 +10,14 @@ const githubOAuth = async (req, res, next) => {
 
   const access_token = await githubOAuthService.getAccessToken(code);
   const oAuthUser = await githubOAuthService.getUser(access_token);
+  const authUser = await authService.handleOAuthLogin(oAuthUser, 'github');
 
-  const oAuthToken = jwtService.generateOAuthToken(oAuthUser);
+  if (!authUser) {
+    res.status(500).json({ message: 'OAuth Failed' });
+    return;
+  }
+
+  const oAuthToken = jwtService.generateOAuthToken(authUser);
 
   res.redirect(`/oauth?oauth-token=${oAuthToken}`);
 };
@@ -21,8 +27,14 @@ const googleOAuth = async (req, res, next) => {
 
   const access_token = await googleOAuthService.getAccessToken(code);
   const oAuthUser = await googleOAuthService.getUser(access_token);
+  const authUser = await authService.handleOAuthLogin(oAuthUser, 'google');
 
-  const oAuthToken = jwtService.generateOAuthToken(oAuthUser);
+  if (!authUser) {
+    res.status(500).json({ message: 'OAuth Failed' });
+    return;
+  }
+
+  const oAuthToken = jwtService.generateOAuthToken(authUser);
 
   res.redirect(`/oauth?oauth-token=${oAuthToken}`);
 };
@@ -30,9 +42,16 @@ const googleOAuth = async (req, res, next) => {
 const oAuth = async (req, res, next) => {
   const { token } = req.body;
 
-  const decoded = jwtService.verifyOAuthToken(token);
+  const authUserPayload = jwtService.verifyOAuthToken(token);
 
-  res.json({ decoded });
+  const { accessToken, refreshToken } =
+    jwtService.generateTokens(authUserPayload);
+  await jwtService.manageRefreshToken(authUserPayload, refreshToken);
+
+  res.json({
+    accessToken,
+    refreshToken,
+  });
 };
 
 const signUp = async (req, res, next) => {

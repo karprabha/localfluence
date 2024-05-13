@@ -39,8 +39,7 @@ const getUser = async (access_token) => {
     const { given_name, family_name, email, picture } = await response.json();
 
     const user = {
-      first_name: given_name,
-      family_name,
+      name: `${given_name} ${family_name}`,
       username: email,
       avatar_url: picture,
     };

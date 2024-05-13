@@ -29,19 +29,31 @@ const getUser = async (access_token) => {
     },
   });
 
-  if (response.ok) {
-    const { login, avatar_url, name } = await response.json();
+  const gitHubUserEmailsResponse = await fetch(
+    'https://api.github.com/user/emails',
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    },
+  );
+
+  if (response.ok && gitHubUserEmailsResponse.ok) {
+    const { avatar_url, name } = await response.json();
+    const gitHubUserEmails = await gitHubUserEmailsResponse.json();
 
     const user = {
-      first_name: name.split(' ')[0] || '',
-      family_name: name.split(' ').slice(1).join(' ') || '',
-      username: login,
+      name,
+      username: gitHubUserEmails[0].email,
       avatar_url,
     };
 
     return user;
-  } else {
+  } else if (!response.ok) {
     throw Error(response.statusText);
+  } else {
+    throw Error(gitHubUserEmailsResponse.statusText);
   }
 };
 
