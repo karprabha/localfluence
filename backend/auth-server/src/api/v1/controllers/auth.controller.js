@@ -47,7 +47,30 @@ const signUp = async (req, res, next) => {
   res.status(201).json(signedUpUser);
 };
 
+const login = async (req, res, next) => {
+  const { username, password } = req.body;
+
+  const authUser = await authService.handlePasswordLogin({
+    username,
+    password,
+  });
+
+  if (!authUser) {
+    res.status(401).json({ message: 'Invalid credentials' });
+    return;
+  }
+
+  const { accessToken, refreshToken } = jwtService.generateTokens(authUser);
+  await jwtService.manageRefreshToken(authUser, refreshToken);
+
+  res.json({
+    accessToken,
+    refreshToken,
+  });
+};
+
 module.exports = {
+  login,
   oAuth,
   signUp,
   githubOAuth,

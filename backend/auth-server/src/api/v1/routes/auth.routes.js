@@ -17,4 +17,11 @@ router.post(
   authController.signUp,
 );
 
+router.post(
+  '/auth/login',
+  authValidator.loginValidator,
+  queryValidationMiddleware,
+  authController.login,
+);
+
 module.exports = router;

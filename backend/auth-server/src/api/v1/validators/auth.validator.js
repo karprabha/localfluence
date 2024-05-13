@@ -48,6 +48,12 @@ const signupValidator = [
     .withMessage('Avatar URL must be between 10 and 255 characters'),
 ];
 
+const loginValidator = [
+  body('username').notEmpty().withMessage('Username/Email is required'),
+  body('password').notEmpty().withMessage('Password is required'),
+];
+
 module.exports = {
+  loginValidator,
   signupValidator,
 };
