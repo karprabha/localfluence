@@ -1,5 +1,10 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
+
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 interface LoginFormProps {
   onSuccess: () => void;
@@ -14,11 +19,11 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
   });
 
   const handleSubmit = (
-    values: { email: string; password: string },
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    values: FormValues,
+    helpers: FormikHelpers<FormValues>
   ) => {
     console.log(values);
-    setSubmitting(false);
+    helpers.setSubmitting(false);
     onSuccess();
   };
 
