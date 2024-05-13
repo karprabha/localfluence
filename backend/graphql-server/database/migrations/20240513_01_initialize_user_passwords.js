@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
-    await queryInterface.createTable("user_oauth", {
+    await queryInterface.createTable("user_passwords", {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,12 +13,8 @@ module.exports = {
         allowNull: false,
         references: { model: "users", key: "id" },
       },
-      provider: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      provider_user_id: {
-        type: DataTypes.STRING,
+      password: {
+        type: DataTypes.STRING(64),
         allowNull: false,
       },
       created_at: {
@@ -34,6 +30,6 @@ module.exports = {
     });
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.dropTable("user_oauth");
+    await queryInterface.dropTable("user_passwords");
   },
 };

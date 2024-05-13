@@ -2,6 +2,7 @@ const {
   githubOAuthService,
   googleOAuthService,
   jwtService,
+  authService,
 } = require('../services');
 
 const githubOAuth = async (req, res, next) => {
@@ -34,8 +35,21 @@ const oAuth = async (req, res, next) => {
   res.json({ decoded });
 };
 
+const signUp = async (req, res, next) => {
+  const { name, username, password } = req.body;
+
+  const signedUpUser = await authService.handleUserSignUp({
+    name,
+    username,
+    password,
+  });
+
+  res.status(201).json(signedUpUser);
+};
+
 module.exports = {
   oAuth,
+  signUp,
   githubOAuth,
   googleOAuth,
 };
