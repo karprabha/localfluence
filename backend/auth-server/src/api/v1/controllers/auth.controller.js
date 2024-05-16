@@ -55,7 +55,7 @@ const oAuth = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const { name, username, password } = req.body;
+  const { name, email: username, password } = req.body;
 
   const signedUpUser = await authService.handleUserSignUp({
     name,
@@ -67,7 +67,7 @@ const signUp = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email: username, password } = req.body;
 
   const authUser = await authService.handlePasswordLogin({
     username,
@@ -75,8 +75,7 @@ const login = async (req, res, next) => {
   });
 
   if (!authUser) {
-    res.status(401).json({ message: 'Invalid credentials' });
-    return;
+    return res.status(401).json({ message: 'Invalid credentials' });
   }
 
   const { accessToken, refreshToken } = jwtService.generateTokens(authUser);

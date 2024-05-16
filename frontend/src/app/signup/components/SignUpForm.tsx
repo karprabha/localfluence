@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
+import useAuth from "@/hooks/useAuth";
 
 interface FormValues {
   name: string;
@@ -8,11 +9,9 @@ interface FormValues {
   confirmPassword: string;
 }
 
-interface SignUpFormProps {
-  onSuccess: () => void;
-}
+const SignUpForm = () => {
+  const { signUp, isLoading, error } = useAuth();
 
-const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -24,13 +23,12 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
       .required("Confirm password is required"),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     helpers: FormikHelpers<FormValues>
   ) => {
-    console.log(values);
+    await signUp(values.name, values.email, values.password);
     helpers.setSubmitting(false);
-    onSuccess();
   };
 
   return (
@@ -121,13 +119,15 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
             />
           </div>
 
+          {error && <div className="text-red-500 text-sm">{error}</div>}
+
           <div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
               className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              {isSubmitting ? "Signing up..." : "Sign up"}
+              {isSubmitting || isLoading ? "Signing up..." : "Sign up"}
             </button>
           </div>
         </Form>

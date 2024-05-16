@@ -4,10 +4,6 @@ import SignUpForm from "./components/SignUpForm";
 import OAuthSection from "../components/OAuthSection";
 
 const page = () => {
-  const handleSignUpSuccess = () => {
-    console.log("SignUp successful!");
-  };
-
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -19,7 +15,7 @@ const page = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10">
-            <SignUpForm onSuccess={handleSignUpSuccess} />
+            <SignUpForm />
 
             <div className="mt-6">
               <div className="relative">

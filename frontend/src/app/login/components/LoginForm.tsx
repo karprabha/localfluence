@@ -1,3 +1,4 @@
+import useAuth from "@/hooks/useAuth";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
@@ -6,11 +7,9 @@ interface FormValues {
   password: string;
 }
 
-interface LoginFormProps {
-  onSuccess: () => void;
-}
+const LoginForm = () => {
+  const { login, isLoading, error } = useAuth();
 
-const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email address")
@@ -18,13 +17,12 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: FormValues,
     helpers: FormikHelpers<FormValues>
   ) => {
-    console.log(values);
+    await login(values.email, values.password);
     helpers.setSubmitting(false);
-    onSuccess();
   };
 
   return (
@@ -53,6 +51,7 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
               name="email"
               component="div"
               className="text-red-500 text-sm"
+              aria-live="polite"
             />
           </div>
 
@@ -74,16 +73,19 @@ const LoginForm = ({ onSuccess }: LoginFormProps) => {
               name="password"
               component="div"
               className="text-red-500 text-sm"
+              aria-live="polite"
             />
           </div>
+
+          {error && <div className="text-red-500 text-sm">{error}</div>}
 
           <div>
             <button
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
             >
-              {isSubmitting ? "Signing in..." : "Sign in"}
+              {isSubmitting || isLoading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </Form>

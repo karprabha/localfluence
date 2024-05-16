@@ -7,13 +7,13 @@ const signupValidator = [
     .withMessage('Name is required')
     .isLength({ max: 100 })
     .withMessage('Name must be at most 100 characters'),
-  body('username')
+  body('email')
     .notEmpty()
-    .withMessage('Username is required')
+    .withMessage('Email is required')
     .isEmail()
-    .withMessage('Username is not an email')
+    .withMessage('Not an email')
     .isLength({ max: 50 })
-    .withMessage('Username must be at most 50 characters')
+    .withMessage('Email must be at most 50 characters')
     .custom(async (value) => {
       const existingUser = await User.findOne({
         where: {
@@ -22,7 +22,7 @@ const signupValidator = [
       });
 
       if (existingUser) {
-        throw new Error('Username is already in use');
+        throw new Error('Email is already in use');
       }
     }),
   body('password')
@@ -49,7 +49,7 @@ const signupValidator = [
 ];
 
 const loginValidator = [
-  body('username').notEmpty().withMessage('Username/Email is required'),
+  body('email').notEmpty().withMessage('Email is required'),
   body('password').notEmpty().withMessage('Password is required'),
 ];
 

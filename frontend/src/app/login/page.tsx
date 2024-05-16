@@ -5,10 +5,6 @@ import LoginForm from "./components/LoginForm";
 import OAuthSection from "../components/OAuthSection";
 
 const LoginPage = () => {
-  const handleLoginSuccess = () => {
-    console.log("Login successful!");
-  };
-
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -20,7 +16,7 @@ const LoginPage = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <LoginForm onSuccess={handleLoginSuccess} />
+            <LoginForm />
 
             <div className="mt-6">
               <div className="relative">

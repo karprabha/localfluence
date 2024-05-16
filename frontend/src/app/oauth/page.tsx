@@ -1,39 +1,37 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { fetchDataWithToken } from "@/services/apiService";
+import { useSearchParams } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
-const Page = () => {
-  const router = useRouter();
+const OAuthPage = () => {
   const searchParams = useSearchParams();
+  const { oauthLogin, isLoading, error } = useAuth();
 
   useEffect(() => {
-    const oAuthToken = searchParams.get("oauth-token");
+    const handleOAuthLogin = async () => {
+      const oauthToken = searchParams.get("oauth-token");
 
-    if (!oAuthToken) {
-      router.push("/login");
-      return;
-    }
-
-    const fetchData = async () => {
-      try {
-        const data = await fetchDataWithToken(oAuthToken);
-        console.log(data);
-        router.push("/");
-      } catch (error: any) {
-        console.log(error.message);
-        router.push("/login");
+      if (typeof oauthToken === "string") {
+        await oauthLogin(oauthToken);
       }
     };
 
-    fetchData();
-  }, [searchParams, router]);
+    handleOAuthLogin();
+  }, [searchParams, oauthLogin]);
 
-  return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
-  );
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-4">{error}</div>;
+  }
+
+  return null;
 };
 
-export default Page;
+export default OAuthPage;
