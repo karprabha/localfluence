@@ -1,21 +1,22 @@
 "use client";
 import Link from "next/link";
-import SignUpForm from "./components/SignUpForm";
-import OAuthSection from "../components/OAuthSection";
 
-const page = () => {
+import LoginForm from "./components/LoginForm";
+import OAuthSection from "@/app/(public)/components/OAuthSection";
+
+const LoginPage = () => {
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-0 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Create a new account
+          <h2 className="mt-2 text-center text-3xl font-bold tracking-tight text-gray-900">
+            Sign in to your account
           </h2>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10">
-            <SignUpForm />
+          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <LoginForm />
 
             <div className="mt-6">
               <div className="relative">
@@ -32,12 +33,12 @@ const page = () => {
               <OAuthSection />
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-6">
-                Already have an account?{" "}
+                Don’t have an account yet?{" "}
                 <Link
-                  href="/login"
+                  href="/signup"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  Login
+                  Sign up
                 </Link>
               </p>
             </div>
@@ -48,4 +49,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;
