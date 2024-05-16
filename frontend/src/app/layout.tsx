@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "../globals.css";
-import Header from "@/app/(public)/components/Header";
-import Footer from "@/app/(public)/components/Footer";
+import "./globals.css";
 
 const roboto = Roboto({
   weight: "400",
@@ -25,13 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
-        <Header />
-        <main className="h-full bg-gray-100">
-          <div className="m-auto">{children}</div>
-        </main>
-        <Footer />
-      </body>
+      <body className={roboto.className}>{children}</body>
     </html>
   );
 }
