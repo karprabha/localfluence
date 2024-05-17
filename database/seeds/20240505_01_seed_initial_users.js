@@ -4,19 +4,19 @@ module.exports = {
   up: async ({ context: queryInterface }) => {
     await queryInterface.bulkInsert("users", [
       {
-        username: "karprabha",
+        email: "developer.prabhakaryadav@gmail.com",
         name: "Prabhakar Yadav",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        username: "johndoe",
+        email: "johndoe@example.com",
         name: "John Doe",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        username: "janesmith",
+        email: "janesmith@example.com",
         name: "Jane Smith",
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -27,7 +27,15 @@ module.exports = {
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(
       "users",
-      { username: { [Op.in]: ["karprabha", "johndoe", "janesmith"] } },
+      {
+        email: {
+          [Op.in]: [
+            "developer.prabhakaryadav@gmail.com",
+            "johndoe@example.com",
+            "janesmith@example.com",
+          ],
+        },
+      },
       {}
     );
   },

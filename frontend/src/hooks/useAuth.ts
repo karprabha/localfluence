@@ -30,6 +30,7 @@ const useAuth = () => {
       router.push("/dashboard");
     } catch (err) {
       setError("OAuth login failed. Please try again.");
+      router.push("/login");
     } finally {
       setIsLoading(false);
     }

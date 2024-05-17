@@ -3,7 +3,7 @@ const { User, UserPassword, RefreshToken, UserOAuth } = require('../models');
 const { sequelize } = require('../../../../config');
 
 const handleOAuthLogin = async (authUser, provider) => {
-  const { name, username, avatar_url } = authUser;
+  const { name, email, avatar_url } = authUser;
   let transaction;
 
   try {
@@ -12,11 +12,11 @@ const handleOAuthLogin = async (authUser, provider) => {
     let userOAuth = await UserOAuth.findOne({
       where: {
         provider,
-        providerUserId: username,
+        providerUserId: email,
       },
       include: {
         model: User,
-        attributes: ['name', 'username', 'id'],
+        attributes: ['name', 'email', 'id'],
       },
       transaction,
     });
@@ -28,19 +28,19 @@ const handleOAuthLogin = async (authUser, provider) => {
 
     const existingUser = await User.findOne({
       where: {
-        username,
+        email,
       },
       transaction,
     });
 
     if (existingUser) {
-      throw new Error('Username is already in use');
+      throw new Error('email is already in use');
     }
 
     const newUser = await User.create(
       {
         name,
-        username,
+        email,
         avatarUrl: avatar_url,
       },
       { transaction },
@@ -49,7 +49,7 @@ const handleOAuthLogin = async (authUser, provider) => {
     userOAuth = await UserOAuth.create(
       {
         provider,
-        providerUserId: username,
+        providerUserId: email,
         userId: newUser.id,
       },
       { transaction },
@@ -60,7 +60,7 @@ const handleOAuthLogin = async (authUser, provider) => {
     const userData = {
       id: newUser.id,
       name: newUser.name,
-      username: newUser.username,
+      email: newUser.email,
     };
 
     return userData;
@@ -73,13 +73,13 @@ const handleOAuthLogin = async (authUser, provider) => {
   }
 };
 
-const handleUserSignUp = async ({ name, username, password }) => {
+const handleUserSignUp = async ({ name, email, password }) => {
   let transaction;
 
   try {
     transaction = await sequelize.transaction();
 
-    const newUser = await User.create({ name, username }, { transaction });
+    const newUser = await User.create({ name, email }, { transaction });
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await UserPassword.create(
@@ -101,10 +101,10 @@ const handleUserSignUp = async ({ name, username, password }) => {
   }
 };
 
-const handlePasswordLogin = async ({ username, password }) => {
+const handlePasswordLogin = async ({ email, password }) => {
   const userWithPassword = await User.findOne({
     where: {
-      username,
+      email,
     },
     include: {
       model: UserPassword,
@@ -127,7 +127,7 @@ const handlePasswordLogin = async ({ username, password }) => {
   return {
     id: userWithPassword.id,
     name: userWithPassword.name,
-    username: userWithPassword.username,
+    email: userWithPassword.email,
   };
 };
 

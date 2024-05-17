@@ -55,11 +55,11 @@ const oAuth = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const { name, email: username, password } = req.body;
+  const { name, email, password } = req.body;
 
   const signedUpUser = await authService.handleUserSignUp({
     name,
-    username,
+    email,
     password,
   });
 
@@ -67,10 +67,10 @@ const signUp = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email: username, password } = req.body;
+  const { email, password } = req.body;
 
   const authUser = await authService.handlePasswordLogin({
-    username,
+    email,
     password,
   });
 

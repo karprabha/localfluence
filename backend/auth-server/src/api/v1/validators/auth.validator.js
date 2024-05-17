@@ -17,7 +17,7 @@ const signupValidator = [
     .custom(async (value) => {
       const existingUser = await User.findOne({
         where: {
-          username: value,
+          email: value,
         },
       });
 

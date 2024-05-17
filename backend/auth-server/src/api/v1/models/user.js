@@ -10,7 +10,7 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    email: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,

@@ -45,7 +45,7 @@ const getUser = async (access_token) => {
 
     const user = {
       name,
-      username: gitHubUserEmails[0].email,
+      email: gitHubUserEmails[0].email,
       avatar_url,
     };
 

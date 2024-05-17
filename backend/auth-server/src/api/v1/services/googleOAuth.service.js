@@ -40,7 +40,7 @@ const getUser = async (access_token) => {
 
     const user = {
       name: `${given_name} ${family_name}`,
-      username: email,
+      email,
       avatar_url: picture,
     };
 
