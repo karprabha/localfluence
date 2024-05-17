@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 shadow bg-slate-800">
+    <header className="sticky top-0 z-20 flex h-16 flex-shrink-0 shadow bg-slate-800">
       <div className="container mx-auto py-2 flex justify-between items-center px-4">
         <h1 className="text-2xl text-white font-semibold">
           <Link href={"/"}>Localfluence</Link>
