@@ -1,0 +1,18 @@
+const typeDefs = `#graphql
+  extend type Query {
+    me: User
+  }
+`;
+
+const resolvers = {
+  Query: {
+    me: (root, args, { currentUser, dataLoaders }) => {
+      return dataLoaders.userLoader.load(currentUser.id);
+    },
+  },
+};
+
+module.exports = {
+  typeDefs,
+  resolvers,
+};

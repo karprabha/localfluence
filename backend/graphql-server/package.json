@@ -16,11 +16,16 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "dataloader": "^2.2.2",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "pg": "^8.11.5",
     "sequelize": "^6.37.3",
-    "umzug": "^3.8.0"
+    "umzug": "^3.8.0",
+    "winston": "^3.13.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
