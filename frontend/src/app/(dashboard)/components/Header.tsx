@@ -16,18 +16,23 @@ import Image from "next/image";
 import { classNames } from "@/utils/classNames";
 import { Fragment } from "react";
 import Link from "next/link";
-
 export const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Settings", href: "#" },
   { name: "Sign out", href: "/" },
 ];
 
-const Header = ({
-  setSidebarOpen,
-}: {
+interface HeaderProps {
   setSidebarOpen: (open: boolean) => void;
-}) => {
+  me: {
+    avatarUrl: string;
+    email: string;
+    id: string;
+    name: string;
+  };
+}
+
+const Header = ({ setSidebarOpen, me }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
       <button
@@ -73,7 +78,7 @@ const Header = ({
                 <span className="sr-only">Open user menu</span>
                 <Image
                   className="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  src={me.avatarUrl}
                   alt=""
                   width={32}
                   height={32}
