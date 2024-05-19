@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import createAuthService from "@/services/authService";
 
@@ -14,6 +15,7 @@ const useAuth = () => {
     setError(null);
     try {
       await authService.login(email, password);
+      Cookies.set("isAuthenticated", "true");
       router.push("/dashboard");
     } catch (err) {
       setError("Login failed. Please check your credentials.");
@@ -27,6 +29,7 @@ const useAuth = () => {
     setError(null);
     try {
       await authService.oauthLogin(token);
+      Cookies.set("isAuthenticated", "true");
       router.push("/dashboard");
     } catch (err) {
       setError("OAuth login failed. Please try again.");
@@ -51,6 +54,7 @@ const useAuth = () => {
 
   const logout = () => {
     authService.logout();
+    Cookies.remove("isAuthenticated");
     router.push("/login");
   };
 

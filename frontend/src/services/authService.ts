@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const API_URL = "/api/v1/auth";
 
@@ -51,6 +52,7 @@ const createAuthService = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    Cookies.remove("isAuthenticated"); // for expired refreshToken
   };
 
   return {
