@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const ME = gql`
+export const ME = gql`
   query ME {
     me {
       avatarUrl
@@ -11,5 +11,3 @@ const ME = gql`
     }
   }
 `;
-
-export default ME;

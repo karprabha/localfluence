@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const UPDATE_USER_TYPE = gql`
+export const UPDATE_USER_TYPE = gql`
   mutation UpdateUserType(
     $userId: ID!
     $userType: String!
@@ -21,5 +21,3 @@ const UPDATE_USER_TYPE = gql`
     }
   }
 `;
-
-export default UPDATE_USER_TYPE;

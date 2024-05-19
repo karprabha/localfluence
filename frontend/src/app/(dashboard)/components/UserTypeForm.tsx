@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import UPDATE_USER_TYPE from "@/graphql/mutations/updateUserType";
-import ME from "@/graphql/queries/me";
-
+import { UPDATE_USER_TYPE } from "@/graphql/mutations";
+import { ME } from "@/graphql/queries";
 interface Me {
   id: string;
   email: string;

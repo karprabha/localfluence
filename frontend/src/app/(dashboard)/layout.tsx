@@ -5,8 +5,8 @@ import { useQuery } from "@apollo/client";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
-import ME from "@/graphql/queries/me";
 import UserTypeForm from "./components/UserTypeForm";
+import { ME } from "@/graphql/queries";
 
 export default function RootLayout({
   children,
