@@ -4,6 +4,7 @@ const typeDefs = `#graphql
     email: String!
     name: String!
     avatarUrl: String!
+    userType: String
   }
 `;
 

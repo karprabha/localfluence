@@ -1,4 +1,3 @@
-```
 .
 ├── .env
 ├── .env.example
@@ -15,7 +14,6 @@
 │   └── extensions.json
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
-├── FOLDER_STRUCTURE.md
 ├── LICENSE
 ├── README.md
 ├── SECURITY.md
@@ -39,7 +37,9 @@
 │   │   │   │   ├── 20240505_01_initialize_users.js
 │   │   │   │   ├── 20240506_01_initialize_user_oauths.js
 │   │   │   │   ├── 20240513_01_initialize_user_passwords.js
-│   │   │   │   └── 20240513_02_initialize_refresh_tokens.js
+│   │   │   │   ├── 20240513_02_initialize_refresh_tokens.js
+│   │   │   │   ├── 20240519_01_add_user_type.js
+│   │   │   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
 │   │   │   └── seeds
 │   │   │       └── 20240505_01_seed_initial_users.js
 │   │   ├── dev.Dockerfile
@@ -90,6 +90,7 @@
 │   │       └── middleware.util.js
 │   ├── graphql-server
 │   │   ├── .dockerignore
+│   │   ├── .env
 │   │   ├── .env.example
 │   │   ├── .prettierignore
 │   │   ├── .prettierrc
@@ -105,7 +106,9 @@
 │   │   │   │   ├── 20240505_01_initialize_users.js
 │   │   │   │   ├── 20240506_01_initialize_user_oauths.js
 │   │   │   │   ├── 20240513_01_initialize_user_passwords.js
-│   │   │   │   └── 20240513_02_initialize_refresh_tokens.js
+│   │   │   │   ├── 20240513_02_initialize_refresh_tokens.js
+│   │   │   │   ├── 20240519_01_add_user_type.js
+│   │   │   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
 │   │   │   └── seeds
 │   │   │       └── 20240505_01_seed_initial_users.js
 │   │   ├── dev.Dockerfile
@@ -121,10 +124,27 @@
 │   │   │   ├── runMigrations.js
 │   │   │   └── runSeeders.js
 │   │   ├── src
-│   │   │   └── app.js
+│   │   │   ├── app.js
+│   │   │   ├── graphql
+│   │   │   │   ├── mutations
+│   │   │   │   ├── queries
+│   │   │   │   │   └── me.js
+│   │   │   │   ├── schema.js
+│   │   │   │   └── types
+│   │   │   │       └── user.js
+│   │   │   ├── loaders
+│   │   │   │   ├── index.js
+│   │   │   │   └── user.js
+│   │   │   └── models
+│   │   │       ├── campaignManager.js
+│   │   │       ├── index.js
+│   │   │       ├── influencer.js
+│   │   │       └── user.js
 │   │   └── utils
 │   │       ├── db.util.js
-│   │       └── index.js
+│   │       ├── index.js
+│   │       ├── jwt.util.js
+│   │       └── logger.util.js
 │   └── shared
 │       └── .gitkeep
 ├── database
@@ -132,13 +152,16 @@
 │   │   ├── 20240505_01_initialize_users.js
 │   │   ├── 20240506_01_initialize_user_oauths.js
 │   │   ├── 20240513_01_initialize_user_passwords.js
-│   │   └── 20240513_02_initialize_refresh_tokens.js
+│   │   ├── 20240513_02_initialize_refresh_tokens.js
+│   │   ├── 20240519_01_add_user_type.js
+│   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
 │   ├── pgdata  [error opening dir]
 │   └── seeds
 │       └── 20240505_01_seed_initial_users.js
 ├── docker-compose.dev.yml
 ├── docker-compose.yml
 ├── docs
+│   ├── FOLDER_STRUCTURE.md
 │   └── images
 │       └── .gitkeep
 ├── frontend
@@ -190,13 +213,18 @@
 │   │   │   ├── globals.css
 │   │   │   ├── layout.tsx
 │   │   │   └── not-found.tsx
+│   │   ├── context
+│   │   │   └── ApolloProvider.tsx
 │   │   ├── graphql
 │   │   │   ├── mutations
 │   │   │   └── queries
+│   │   │       ├── index.ts
+│   │   │       └── me.ts
 │   │   ├── hooks
 │   │   │   └── useAuth.ts
 │   │   ├── middleware.ts
 │   │   ├── services
+│   │   │   ├── apolloClient.ts
 │   │   │   └── authService.ts
 │   │   └── utils
 │   │       ├── classNames.ts
@@ -208,5 +236,3 @@
 │   └── nginx.dev.conf
 └── scripts
     └── sync-db-directories.sh
-
-```

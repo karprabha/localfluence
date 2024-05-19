@@ -28,6 +28,10 @@ User.init(
       defaultValue:
         'https://res.cloudinary.com/dn3rb7yf5/image/upload/v1698059883/blank_avatar_wdye0t.png',
     },
+    userType: {
+      type: DataTypes.ENUM('influencer', 'campaign_manager'),
+      allowNull: true,
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
