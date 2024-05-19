@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   keywords:
     "Localfluence, influencer marketing, local influencers, campaign tracking, monetization, business collaboration, influencer platform",
   authors: [{ name: "Prabhakar Yadav" }],
+  icons: {
+    icon: "favicon.ico",
+  },
 };
 
 export default function RootLayout({
