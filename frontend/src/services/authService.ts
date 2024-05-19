@@ -38,12 +38,12 @@ const createAuthService = () => {
   };
 
   const refreshToken = async () => {
-    const refreshToken = getRefreshToken();
+    const refreshToken = getRefreshToken() || "";
     const response = await axios.post(`${API_URL}/refresh`, {
-      token: refreshToken,
+      refreshToken,
     });
     if (response.data.accessToken) {
-      setTokens(response.data.accessToken, response.data.refreshToken);
+      setTokens(response.data.accessToken, refreshToken);
     }
     return response.data.accessToken;
   };
