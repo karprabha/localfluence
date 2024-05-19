@@ -2,8 +2,9 @@ const { startStandaloneServer } = require('@apollo/server/standalone');
 
 const createApolloServer = require('../src/app');
 const { connectToDatabase } = require('../config');
-const { verifyAccessToken } = require('../utils');
+const { verifyAccessToken, logger } = require('../utils');
 const createDataLoaders = require('../src/loaders');
+const { GraphQLError } = require('graphql');
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
@@ -30,15 +31,28 @@ const startServer = async () => {
     context: ({ req, res }) => {
       const authorization = req.headers.authorization;
 
-      const accessToken = authorization
-        ? authorization.split(' ')[1]
-        : undefined;
-      const dataLoaders = createDataLoaders();
+      try {
+        const accessToken = authorization
+          ? authorization.split(' ')[1]
+          : undefined;
+        const dataLoaders = createDataLoaders();
 
-      return {
-        currentUser: verifyAccessToken(accessToken),
-        dataLoaders,
-      };
+        if (!accessToken) {
+          throw new GraphQLError('Token is missing', {
+            extensions: { code: 'UNAUTHORIZED', status: 401 },
+          });
+        }
+
+        return {
+          currentUser: verifyAccessToken(accessToken),
+          dataLoaders,
+        };
+      } catch (error) {
+        logger.error('Context creation failed:', error);
+        throw new GraphQLError(error.message, {
+          extensions: { code: 'UNAUTHORIZED', status: 401 },
+        });
+      }
     },
   });
 

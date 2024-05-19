@@ -37,7 +37,7 @@ const createErrorLink = (authService: any) => {
   return onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       for (const err of graphQLErrors) {
-        if (err.extensions?.code === "UNAUTHENTICATED") {
+        if (err.extensions?.code === "UNAUTHORIZED") {
           if (!isRefreshing) {
             isRefreshing = true;
             return fromPromise(
