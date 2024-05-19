@@ -21,6 +21,16 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     });
     await queryInterface.createTable("campaign_managers", {
       user_id: {
@@ -38,6 +48,16 @@ module.exports = {
       campaign_budget: {
         type: DataTypes.FLOAT,
         allowNull: false,
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     });
   },

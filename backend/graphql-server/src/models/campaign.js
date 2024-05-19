@@ -1,26 +1,33 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../config');
 
-class CampaignManager extends Model {}
+class Campaign extends Model {}
 
-CampaignManager.init(
+Campaign.init(
   {
-    userId: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      references: {
-        model: 'users',
-        key: 'id',
-      },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
+      autoIncrement: true,
     },
-    companyName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    campaignBudget: {
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    budget: {
       type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    endDate: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     createdAt: {
@@ -37,9 +44,9 @@ CampaignManager.init(
   {
     sequelize,
     underscored: true,
-    timestamps: false,
-    modelName: 'campaignManager',
+    timestamps: true,
+    modelName: 'campaign',
   },
 );
 
-module.exports = CampaignManager;
+module.exports = Campaign;

@@ -1,10 +1,12 @@
 const typeDefs = `#graphql
-  type User {
+  type Campaign {
     id: ID!
-    email: String!
+    userId: ID!
     name: String!
-    avatarUrl: String!
-    userType: String
+    description: String
+    budget: Float!
+    startDate: String!
+    endDate: String!
   }
 `;
 
