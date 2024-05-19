@@ -12,6 +12,8 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: "users", key: "id" },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       provider: {
         type: DataTypes.STRING,

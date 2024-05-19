@@ -1,3 +1,4 @@
+const { GraphQLError } = require('graphql');
 const { sequelize } = require('../../../config');
 const { User, Influencer, CampaignManager } = require('../../models');
 
@@ -27,7 +28,15 @@ const resolvers = {
       const user = await dataLoaders.userLoader.load(userId);
 
       if (!user) {
-        throw new Error('User not found');
+        throw new GraphQLError('User not found', {
+          extensions: { code: 'USER_NOT_FOUND', status: 404 },
+        });
+      }
+
+      if (user.userType && user.userType !== userType) {
+        throw new GraphQLError('User type cannot be changed', {
+          extensions: { code: 'USER_TYPE_CHANGE_NOT_ALLOWED', status: 400 },
+        });
       }
 
       return sequelize.transaction(async (t) => {
