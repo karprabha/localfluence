@@ -2,7 +2,7 @@ const { merge } = require('lodash');
 
 const me = require('./queries/me');
 const user = require('./types/user');
-const updateUser = require('./mutations/updateUser');
+const updateUserType = require('./mutations/updateUserType');
 
 const rootTypeDefs = `#graphql
   type Query {
@@ -18,9 +18,9 @@ const typeDefs = [
   rootTypeDefs,
   me.typeDefs,
   user.typeDefs,
-  updateUser.typeDefs,
+  updateUserType.typeDefs,
 ];
-const resolvers = merge(me.resolvers, user.resolvers, updateUser.resolvers);
+const resolvers = merge(me.resolvers, user.resolvers, updateUserType.resolvers);
 
 module.exports = {
   typeDefs,

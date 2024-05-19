@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import ME from "@/graphql/queries/me";
+import UserTypeForm from "./components/UserTypeForm";
 
 export default function RootLayout({
   children,
@@ -23,14 +24,19 @@ export default function RootLayout({
 
   return (
     <>
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="flex flex-col md:pl-64 flex-1">
-        <Header setSidebarOpen={setSidebarOpen} me={me} />
-        <main className="flex-1">
-          <div className="py-6">{children}</div>
-        </main>
-        <Footer />
-      </div>
+      {me.userType === null && <UserTypeForm me={me} />}
+      {me.userType !== null && (
+        <>
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <div className="flex flex-col md:pl-64 flex-1">
+            <Header setSidebarOpen={setSidebarOpen} me={me} />
+            <main className="flex-1">
+              <div className="py-6">{children}</div>
+            </main>
+            <Footer />
+          </div>
+        </>
+      )}
     </>
   );
 }

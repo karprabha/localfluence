@@ -7,6 +7,7 @@ const ME = gql`
       email
       id
       name
+      userType
     }
   }
 `;

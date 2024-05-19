@@ -8,13 +8,13 @@ const typeDefs = `#graphql
   }
 
   input InfluencerInput {
-    followersCount: Int
-    platform: String
+    followersCount: Int!
+    platform: String!
   }
 
   input CampaignManagerInput {
-    companyName: String
-    campaignBudget: Float
+    companyName: String!
+    campaignBudget: Float!
   }
 `;
 
