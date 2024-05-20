@@ -16,11 +16,7 @@ import Image from "next/image";
 import { classNames } from "@/utils/classNames";
 import { Fragment } from "react";
 import Link from "next/link";
-export const userNavigation = [
-  { name: "Your Profile", href: "/dashboard/profile" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "/" },
-];
+import useAuth from "@/hooks/useAuth";
 
 interface HeaderProps {
   setSidebarOpen: (open: boolean) => void;
@@ -33,6 +29,14 @@ interface HeaderProps {
 }
 
 const Header = ({ setSidebarOpen, me }: HeaderProps) => {
+  const { logout } = useAuth();
+
+  const userNavigation = [
+    { name: "Your Profile", href: "/dashboard/profile" },
+    { name: "Settings", href: "#" },
+    { name: "Sign out", action: logout },
+  ];
+
   return (
     <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
       <button
@@ -95,21 +99,37 @@ const Header = ({ setSidebarOpen, me }: HeaderProps) => {
               leaveTo="transform opacity-0 scale-95"
             >
               <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                {userNavigation.map((item) => (
-                  <MenuItem key={item.name}>
-                    {({ active }) => (
-                      <Link
-                        href={item.href}
-                        className={classNames(
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-gray-700"
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    )}
-                  </MenuItem>
-                ))}
+                {userNavigation.map((item) =>
+                  item.href ? (
+                    <MenuItem key={item.name}>
+                      {({ active }) => (
+                        <Link
+                          href={item.href}
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      )}
+                    </MenuItem>
+                  ) : (
+                    <MenuItem key={item.name}>
+                      {({ active }) => (
+                        <button
+                          onClick={item.action}
+                          className={classNames(
+                            active ? "bg-gray-100" : "",
+                            "block w-full text-left px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          {item.name}
+                        </button>
+                      )}
+                    </MenuItem>
+                  )
+                )}
               </MenuItems>
             </Transition>
           </Menu>
