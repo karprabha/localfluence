@@ -4,13 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { UPDATE_USER_TYPE } from "@/graphql/mutations";
 import { ME } from "@/graphql/queries";
-interface Me {
-  id: string;
-  email: string;
-  name: string;
-  avatarUrl: string;
-  userType: string | null;
-}
+import { Me, UserType } from "@/graphql/types";
 
 interface UserTypeFormProps {
   me: Me;
@@ -27,7 +21,7 @@ interface CampaignManagerValues {
 }
 
 const UserTypeForm = ({ me }: UserTypeFormProps) => {
-  const [userType, setUserType] = useState<string>("");
+  const [userType, setUserType] = useState<UserType | "">("");
 
   const [updateUserType] = useMutation(UPDATE_USER_TYPE, {
     onCompleted: (data) => {
@@ -88,12 +82,14 @@ const UserTypeForm = ({ me }: UserTypeFormProps) => {
             <label className="block text-gray-700">Select Your Role:</label>
             <select
               value={userType}
-              onChange={(e) => setUserType(e.target.value)}
+              onChange={(e) => setUserType(e.target.value as UserType)}
               className="block w-full mt-1 p-2 border border-gray-300 rounded"
             >
               <option value="">--Select Role--</option>
-              <option value="influencer">Influencer</option>
-              <option value="campaign_manager">Campaign Manager</option>
+              <option value={UserType.INFLUENCER}>Influencer</option>
+              <option value={UserType.CAMPAIGN_MANAGER}>
+                Campaign Manager
+              </option>
             </select>
           </>
         )}

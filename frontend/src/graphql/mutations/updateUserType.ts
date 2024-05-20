@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 export const UPDATE_USER_TYPE = gql`
   mutation UpdateUserType(
     $userId: ID!
-    $userType: String!
+    $userType: UserType!
     $influencerData: InfluencerInput
     $campaignManagerData: CampaignManagerInput
   ) {
