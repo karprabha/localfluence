@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
 const OAuthPage = () => {
   const searchParams = useSearchParams();
   const { oauthLogin, isLoading, error } = useAuth();
+  const [hasRequested, setHasRequested] = useState(false);
 
   const oauthToken = useMemo(
     () => searchParams.get("oauth-token"),
@@ -14,13 +15,15 @@ const OAuthPage = () => {
 
   useEffect(() => {
     const handleOAuthLogin = async () => {
-      if (typeof oauthToken === "string") {
+      if (typeof oauthToken === "string" && !hasRequested) {
+        setHasRequested(true);
         await oauthLogin(oauthToken);
+        setHasRequested(false);
       }
     };
 
     handleOAuthLogin();
-  }, [oauthToken, oauthLogin]);
+  }, [oauthToken, oauthLogin, hasRequested]);
 
   if (isLoading) {
     return (
