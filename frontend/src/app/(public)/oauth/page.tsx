@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
-const OAuthPage = () => {
+const SuspenseChild = () => {
   const searchParams = useSearchParams();
   const { oauthLogin, isLoading, error } = useAuth();
   const [hasRequested, setHasRequested] = useState(false);
@@ -38,6 +38,14 @@ const OAuthPage = () => {
   }
 
   return null;
+};
+
+const OAuthPage = () => {
+  return (
+    <Suspense>
+      <SuspenseChild />
+    </Suspense>
+  );
 };
 
 export default OAuthPage;
