@@ -17,7 +17,7 @@ import { classNames } from "@/utils/classNames";
 import { Fragment } from "react";
 import Link from "next/link";
 export const userNavigation = [
-  { name: "Your Profile", href: "#" },
+  { name: "Your Profile", href: "/dashboard/profile" },
   { name: "Settings", href: "#" },
   { name: "Sign out", href: "/" },
 ];
