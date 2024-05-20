@@ -1,11 +1,12 @@
-const { GraphQLError } = require('graphql');
-const { sequelize } = require('../../../config');
-const { User, Influencer, CampaignManager } = require('../../models');
 const Yup = require('yup');
+const { GraphQLError } = require('graphql');
+
+const { sequelize } = require('../../../config');
+const { Influencer, CampaignManager } = require('../../models');
 
 const typeDefs = `#graphql
   extend type Mutation {
-    updateUserType(userId: ID!, userType: String!, influencerData: InfluencerInput, campaignManagerData: CampaignManagerInput): User
+    updateUserType(userId: ID!, userType: UserType!, influencerData: InfluencerInput, campaignManagerData: CampaignManagerInput): User
   }
 
   input InfluencerInput {

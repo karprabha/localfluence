@@ -1,6 +1,7 @@
-const { GraphQLError } = require('graphql');
-const { Campaign } = require('../../models');
 const Yup = require('yup');
+const { GraphQLError } = require('graphql');
+
+const { Campaign } = require('../../models');
 
 const typeDefs = `#graphql
   extend type Mutation {

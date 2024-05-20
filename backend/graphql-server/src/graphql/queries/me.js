@@ -6,7 +6,7 @@ const typeDefs = `#graphql
 
 const resolvers = {
   Query: {
-    me: (root, args, { currentUser, dataLoaders }) => {
+    me: (_, __, { currentUser, dataLoaders }) => {
       return dataLoaders.userLoader.load(currentUser.id);
     },
   },
