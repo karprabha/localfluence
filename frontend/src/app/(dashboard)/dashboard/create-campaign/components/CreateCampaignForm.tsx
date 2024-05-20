@@ -1,10 +1,12 @@
 "use client";
+import { useState } from "react";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CREATE_CAMPAIGN } from "@/graphql/mutations";
 import { useRouter } from "next/navigation";
 import { GET_CAMPAIGNS } from "@/graphql/queries";
+import { XCircleIcon } from "@heroicons/react/20/solid";
 
 interface CreateCampaignValues {
   name: string;
@@ -16,6 +18,7 @@ interface CreateCampaignValues {
 
 const CreateCampaignForm: React.FC = () => {
   const router = useRouter();
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   const [createCampaign] = useMutation(CREATE_CAMPAIGN, {
     refetchQueries: [{ query: GET_CAMPAIGNS }],
@@ -25,10 +28,21 @@ const CreateCampaignForm: React.FC = () => {
     },
     onError: (error) => {
       console.error("Error creating campaign:", error);
+      if (error.graphQLErrors) {
+        const validationErrors = error.graphQLErrors[0]?.extensions?.details;
+        if (Array.isArray(validationErrors)) {
+          setFormErrors(validationErrors);
+        } else {
+          setFormErrors([error.message]);
+        }
+      } else {
+        setFormErrors([error.message]);
+      }
     },
   });
 
   const handleSubmit = async (values: CreateCampaignValues) => {
+    setFormErrors([]);
     await createCampaign({ variables: values });
   };
 
@@ -54,6 +68,30 @@ const CreateCampaignForm: React.FC = () => {
     >
       {({ isSubmitting }) => (
         <Form className="space-y-12">
+          {formErrors.length > 0 && (
+            <div className="rounded-md bg-red-50 p-4 mb-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <XCircleIcon
+                    className="h-5 w-5 text-red-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    There were errors with your submission
+                  </h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <ul className="list-disc pl-5 space-y-1">
+                      {formErrors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Campaign Information

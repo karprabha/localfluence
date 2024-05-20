@@ -17,7 +17,11 @@ const apolloErrorFormatter = (formattedError) => {
     case 'BAD_USER_INPUT':
       normalizedError = {
         message: error.message,
-        extensions: { code: 'BAD_USER_INPUT', status: 400 },
+        extensions: {
+          code: 'BAD_USER_INPUT',
+          status: 400,
+          details: error.extensions.details || [],
+        },
       };
       break;
     case 'UNAUTHORIZED':
