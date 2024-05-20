@@ -39,7 +39,8 @@
 │   │   │   │   ├── 20240513_01_initialize_user_passwords.js
 │   │   │   │   ├── 20240513_02_initialize_refresh_tokens.js
 │   │   │   │   ├── 20240519_01_add_user_type.js
-│   │   │   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   │   │   ├── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   │   │   └── 20240520_01_initialize_campaigns.js
 │   │   │   └── seeds
 │   │   │       └── 20240505_01_seed_initial_users.js
 │   │   ├── dev.Dockerfile
@@ -108,7 +109,8 @@
 │   │   │   │   ├── 20240513_01_initialize_user_passwords.js
 │   │   │   │   ├── 20240513_02_initialize_refresh_tokens.js
 │   │   │   │   ├── 20240519_01_add_user_type.js
-│   │   │   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   │   │   ├── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   │   │   └── 20240520_01_initialize_campaigns.js
 │   │   │   └── seeds
 │   │   │       └── 20240505_01_seed_initial_users.js
 │   │   ├── dev.Dockerfile
@@ -126,16 +128,25 @@
 │   │   ├── src
 │   │   │   ├── app.js
 │   │   │   ├── graphql
+│   │   │   │   ├── enums
+│   │   │   │   │   └── userType.js
 │   │   │   │   ├── mutations
+│   │   │   │   │   ├── createCampaign.js
+│   │   │   │   │   └── updateUserType.js
 │   │   │   │   ├── queries
-│   │   │   │   │   └── me.js
+│   │   │   │   │   ├── getCampaigns.js
+│   │   │   │   │   ├── me.js
+│   │   │   │   │   └── userProfile.js
 │   │   │   │   ├── schema.js
 │   │   │   │   └── types
+│   │   │   │       ├── campaign.js
 │   │   │   │       └── user.js
 │   │   │   ├── loaders
+│   │   │   │   ├── campaign.js
 │   │   │   │   ├── index.js
 │   │   │   │   └── user.js
 │   │   │   └── models
+│   │   │       ├── campaign.js
 │   │   │       ├── campaignManager.js
 │   │   │       ├── index.js
 │   │   │       ├── influencer.js
@@ -154,7 +165,8 @@
 │   │   ├── 20240513_01_initialize_user_passwords.js
 │   │   ├── 20240513_02_initialize_refresh_tokens.js
 │   │   ├── 20240519_01_add_user_type.js
-│   │   └── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   ├── 20240519_02_initialize_influencers_and_campaign_managers.js
+│   │   └── 20240520_01_initialize_campaigns.js
 │   ├── pgdata  [error opening dir]
 │   └── seeds
 │       └── 20240505_01_seed_initial_users.js
@@ -181,16 +193,25 @@
 │   ├── package.json
 │   ├── postcss.config.mjs
 │   ├── public
-│   │   └── .gitkeep
+│   │   └── favicon.ico
 │   ├── src
 │   │   ├── app
 │   │   │   ├── (dashboard)
 │   │   │   │   ├── components
 │   │   │   │   │   ├── Footer.tsx
 │   │   │   │   │   ├── Header.tsx
-│   │   │   │   │   └── Sidebar.tsx
+│   │   │   │   │   ├── Sidebar.tsx
+│   │   │   │   │   └── UserTypeForm.tsx
 │   │   │   │   ├── dashboard
-│   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── components
+│   │   │   │   │   │   └── CampaignList.tsx
+│   │   │   │   │   ├── create-campaign
+│   │   │   │   │   │   ├── components
+│   │   │   │   │   │   │   └── CreateCampaignForm.tsx
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── profile
+│   │   │   │   │       └── page.tsx
 │   │   │   │   ├── layout.tsx
 │   │   │   │   └── not-found.tsx
 │   │   │   ├── (public)
@@ -217,9 +238,18 @@
 │   │   │   └── ApolloProvider.tsx
 │   │   ├── graphql
 │   │   │   ├── mutations
-│   │   │   └── queries
+│   │   │   │   ├── createCampaign.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   └── updateUserType.ts
+│   │   │   ├── queries
+│   │   │   │   ├── getCampaigns.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── me.ts
+│   │   │   │   └── userProfile.ts
+│   │   │   └── types
 │   │   │       ├── index.ts
-│   │   │       └── me.ts
+│   │   │       ├── me.ts
+│   │   │       └── userType.ts
 │   │   ├── hooks
 │   │   │   └── useAuth.ts
 │   │   ├── middleware.ts
