@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { CREATE_CAMPAIGN } from "@/graphql/mutations";
 import { useRouter } from "next/navigation";
+import { GET_CAMPAIGNS } from "@/graphql/queries";
 
 interface CreateCampaignValues {
   name: string;
@@ -17,6 +18,7 @@ const CreateCampaignForm: React.FC = () => {
   const router = useRouter();
 
   const [createCampaign] = useMutation(CREATE_CAMPAIGN, {
+    refetchQueries: [{ query: GET_CAMPAIGNS }],
     onCompleted: (data) => {
       console.log("Campaign created successfully:", data);
     },
