@@ -11,18 +11,22 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@/utils/classNames";
 import Link from "next/link";
 
-import {
-  HomeIcon,
-  UsersIcon,
-  FolderIcon,
-  ChartBarIcon,
-} from "@heroicons/react/24/outline";
+import { HomeIcon, FolderIcon } from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
 
 export const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Campaigns", href: "#", icon: FolderIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartBarIcon, current: false },
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: HomeIcon,
+    current: true,
+  },
+  {
+    name: "Create Campaigns",
+    href: "/dashboard/create-campaign",
+    icon: FolderIcon,
+    current: false,
+  },
 ];
 
 const Sidebar = ({
@@ -32,6 +36,8 @@ const Sidebar = ({
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 }) => {
+  const currentPath = usePathname();
+
   return (
     <>
       <Transition show={sidebarOpen} as={Fragment}>
@@ -98,7 +104,7 @@ const Sidebar = ({
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current
+                          item.href === currentPath
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
                           "group flex items-center px-2 py-2 text-base font-medium rounded-md"
@@ -106,7 +112,7 @@ const Sidebar = ({
                       >
                         <item.icon
                           className={classNames(
-                            item.current
+                            item.href === currentPath
                               ? "text-gray-300"
                               : "text-gray-400 group-hover:text-gray-300",
                             "mr-4 flex-shrink-0 h-6 w-6"
@@ -139,7 +145,7 @@ const Sidebar = ({
                   key={item.name}
                   href={item.href}
                   className={classNames(
-                    item.current
+                    item.href === currentPath
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
@@ -147,7 +153,7 @@ const Sidebar = ({
                 >
                   <item.icon
                     className={classNames(
-                      item.current
+                      item.href === currentPath
                         ? "text-gray-300"
                         : "text-gray-400 group-hover:text-gray-300",
                       "mr-3 flex-shrink-0 h-6 w-6"
