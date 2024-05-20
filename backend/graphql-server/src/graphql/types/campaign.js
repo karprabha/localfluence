@@ -7,10 +7,17 @@ const typeDefs = `#graphql
     budget: Float!
     startDate: String!
     endDate: String!
+    user: User
   }
 `;
 
-const resolvers = {};
+const resolvers = {
+  Campaign: {
+    user: async (campaign, _, { dataLoaders }) => {
+      return dataLoaders.userLoader.load(campaign.userId);
+    },
+  },
+};
 
 module.exports = {
   typeDefs,

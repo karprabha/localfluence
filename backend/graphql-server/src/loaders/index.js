@@ -1,3 +1,4 @@
+const createCampaignLoader = require('./campaign');
 const {
   createUserLoader,
   createInfluencerLoader,
@@ -7,6 +8,7 @@ const {
 const createDataLoaders = () => {
   return {
     userLoader: createUserLoader(),
+    campaignLoader: createCampaignLoader(),
     influencerLoader: createInfluencerLoader(),
     campaignManagerLoader: createCampaignManagerLoader(),
   };
