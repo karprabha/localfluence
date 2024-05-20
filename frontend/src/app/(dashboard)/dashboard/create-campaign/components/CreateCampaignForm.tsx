@@ -21,6 +21,7 @@ const CreateCampaignForm: React.FC = () => {
     refetchQueries: [{ query: GET_CAMPAIGNS }],
     onCompleted: (data) => {
       console.log("Campaign created successfully:", data);
+      router.push("/dashboard");
     },
     onError: (error) => {
       console.error("Error creating campaign:", error);
@@ -29,7 +30,6 @@ const CreateCampaignForm: React.FC = () => {
 
   const handleSubmit = async (values: CreateCampaignValues) => {
     await createCampaign({ variables: values });
-    router.push("/dashboard");
   };
 
   const campaignSchema = Yup.object().shape({

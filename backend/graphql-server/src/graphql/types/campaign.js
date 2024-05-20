@@ -16,6 +16,12 @@ const resolvers = {
     user: async (campaign, _, { dataLoaders }) => {
       return dataLoaders.userLoader.load(campaign.userId);
     },
+    startDate: (campaign) => {
+      return new Date(campaign.startDate).toISOString();
+    },
+    endDate: (campaign) => {
+      return new Date(campaign.endDate).toISOString();
+    },
   },
 };
 

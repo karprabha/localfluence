@@ -1,6 +1,7 @@
 const { GraphQLError } = require('graphql');
 const { sequelize } = require('../../../config');
 const { User, Influencer, CampaignManager } = require('../../models');
+const Yup = require('yup');
 
 const typeDefs = `#graphql
   extend type Mutation {
@@ -25,6 +26,39 @@ const resolvers = {
       { userId, userType, influencerData, campaignManagerData },
       { dataLoaders },
     ) => {
+      const influencerSchema = Yup.object().shape({
+        followersCount: Yup.number()
+          .required('Followers count is required')
+          .positive('Followers count must be a positive number'),
+        platform: Yup.string().required('Platform is required'),
+      });
+
+      const campaignManagerSchema = Yup.object().shape({
+        companyName: Yup.string().required('Company name is required'),
+        campaignBudget: Yup.number()
+          .required('Campaign budget is required')
+          .positive('Campaign budget must be a positive number'),
+      });
+
+      try {
+        if (userType === 'influencer' && influencerData) {
+          await influencerSchema.validate(influencerData, {
+            abortEarly: false,
+          });
+        } else if (userType === 'campaign_manager' && campaignManagerData) {
+          await campaignManagerSchema.validate(campaignManagerData, {
+            abortEarly: false,
+          });
+        }
+      } catch (error) {
+        throw new GraphQLError('Validation failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            details: error.errors,
+          },
+        });
+      }
+
       const user = await dataLoaders.userLoader.load(userId);
 
       if (!user) {
