@@ -18,7 +18,7 @@ LocalFluence is a platform aimed at facilitating connections between businesses 
 
 Welcome to LocalFluence, where businesses and influencers connect effortlessly. Whether you're looking to discover local influencers or track campaign performance, LocalFluence provides the tools you need.
 
-![CodeGeekCentral Home](./docs/images/1.png)
+![LocalFluence Home](./docs/images/1.png)
 
 ## Features
 
