@@ -13,7 +13,7 @@ const page = () => {
           </h2>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
           <div className="bg-white py-8 px-4 shadow rounded-lg sm:px-10">
             <SignUpForm />
 
