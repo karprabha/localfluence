@@ -23,6 +23,16 @@ const nextConfig = {
         hostname: "unsplash.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "github.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+        port: "",
+      },
     ],
   },
 };
