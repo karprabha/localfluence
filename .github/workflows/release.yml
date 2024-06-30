@@ -62,7 +62,7 @@ jobs:
       - name: Build and push reverse-proxy (configured nginx) image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./nginx
           file: ./nginx/Dockerfile
           push: true
           tags: karprabha/localfluence-reverse-proxy:latest
