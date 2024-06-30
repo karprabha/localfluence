@@ -59,10 +59,10 @@ jobs:
           push: true
           tags: karprabha/localfluence-graphql-server:latest
 
-      - name: Build and push nginx image
+      - name: Build and push reverse-proxy (configured nginx) image
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./nginx/Dockerfile
           push: true
-          tags: karprabha/localfluence-nginx:latest
+          tags: karprabha/localfluence-reverse-proxy:latest
