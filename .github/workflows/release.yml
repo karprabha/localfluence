@@ -42,6 +42,11 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: karprabha/localfluence-client:latest
+          build-args: |
+            NEXT_PUBLIC_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_REDIRECT_URI }}
+            NEXT_PUBLIC_GITHUB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_CLIENT_ID }}
+            NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+            NEXT_PUBLIC_GRAPHQL_URI=${{ secrets.NEXT_PUBLIC_GRAPHQL_URI }}
 
       - name: Build and push auth-server image
         uses: docker/build-push-action@v4
